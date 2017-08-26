@@ -1,0 +1,63 @@
+* Exercises
+** Input
+*** #1
+    Using the FIELDWIDTHS variable (see Constant Size), write a program to read
+    election data, where each record represents one voter’s votes. Come up with a
+    way to define which columns are associated with each ballot item, and print the
+    total votes, including abstentions, for each item.
+
+    #+BEGIN_SRC awk :in-file data/election_data
+      BEGIN  { FIELDWIDTHS = "18 9 15" }
+      
+      NR > 2 {
+          if ($2 ~ "x") {
+              gore++
+          } else if ($3 ~ "x") {
+              bush++
+          } else {
+              abstained++
+          }
+      }
+      
+      END { print "Bush:", bush, "Gore:", gore, "Abstained:", abstained }
+    #+END_SRC
+
+    #+RESULTS:
+    : Bush: 9 Gore: 10 Abstained: 1
+
+*** #2
+    Plain Getline, presented a program to remove C-style comments (‘/* … */’) from
+    the input. That program does not work if one comment ends on one line and
+    another one starts later on the same line. That can be fixed by making one
+    simple change. What is it?
+
+    #+BEGIN_SRC awk :in-file data/tcdrain.c
+    {
+        while ((i = index($0, "/*")) != 0) {
+            out = substr($0, 1, i - 1)  # leading part of the string
+            rest = substr($0, i + 2)    # ... */ ...
+            j = index(rest, "*/")       # is */ in trailing part?
+            if (j > 0) {
+                rest = substr(rest, j + 2)  # remove comment
+            } else {
+                while (j == 0) {
+                    # get more text
+                    if (getline <= 0) {
+                        print("unexpected EOF or error:", ERRNO) > "/dev/stderr"
+                        exit
+                    }
+                    # build up the line using string concatenation
+                    rest = rest $0
+                    j = index(rest, "*/")   # is */ in trailing part?
+                    if (j != 0) {
+                        rest = substr(rest, j + 2)
+                        break
+                    }
+                }
+            }
+            # build up the output line using string concatenation
+            $0 = out rest
+        }
+        print $0
+    }
+    #+END_SRC
