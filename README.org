@@ -3,13 +3,14 @@
   aspiring =awk= wizard advance their skills.
 
   The manual itself doesn't contain any answers to these exercises and I haven't
-  found any elsewhere. This repository provides those answer for those who are
-  stuck or need quick review.
+  found any elsewhere. This repository provides those answers for anyone who is
+  stuck or needs a quick tip.
 
-  These answers are composed in literate programming style which combines prose,
-  source code and it's output into a single document.
+  These answers are compiled in a single document written in literate
+  programming style. Literate programming combines prose, source code and
+  =awk='s output into a single document.
 
-  If you've found a cleaner or more didactic solution that /exclusively/ uses
+  If you think you've found a cleaner didactic solution that /exclusively/ uses
   features presented prior to the section where that exercise appears, [[https://github.com/zv/gawk-exercise/issues][please
   submit a pull request!]]
 
