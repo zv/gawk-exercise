@@ -150,9 +150,24 @@
       argument.
 
       #+BEGIN_SRC awk :in-file data/empty data/empty1 :results pp :exports both
-      ENDFILE { print(FILENAME) }
+      ENDFILE { print(FILENAME, ++argi) }
       #+END_SRC
 
       #+RESULTS:
-      : data/empty
-      : data/empty1
+      : data/empty 1
+      : data/empty1 2
+*** #2
+    As a related challenge, revise that code to handle the case where an
+    intervening value in ~ARGV~ is a variable assignment.
+
+      #+BEGIN_SRC awk :cmd-line "--assign=nval=9" :in-file data/empty data/empty1 :results pp :exports both
+      ENDFILE {
+        if (argv[argi++] !~ /^[a-zA-Z_][a-zA-Z0-9_]*=.*/) {
+            print(FILENAME, argi)
+        }
+      }
+      #+END_SRC
+
+      #+RESULTS:
+      : data/empty 1
+      : data/empty1 2
