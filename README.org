@@ -343,3 +343,49 @@
       =END=, which as the manual indicates, only occurs as the termination of
       the entire program.
 
+**** #7
+     Manipulation of individual characters in the =translate= program (see
+     [[https://www.gnu.org/software/gawk/manual/gawk.html#Translate-Program][Translate Program]]) is painful using standard awk functions. Given that =gawk=
+     can split strings into individual characters using "" as the separator, how
+     might you use this feature to simplify the program?
+
+****** Answer
+       
+       #+BEGIN_SRC awk :results pp :exports both
+         function stranslate(from, to, target, lf, lt, ltarget, t_ar, i, c, result)
+         {
+             split(from, f_a, "");
+             split(to, t_a, "");
+             for (i in f_a) t_ar[f_a[i]] = t_a[i];
+             if (lt < lf)
+                 for (; i <= lf; i++) t_ar[f_a[i]] = t_a[length(t_a)]
+
+             split(target, target_chs, "")
+             for (idx in target_chs) {
+                 c = target[chs]
+                 if (c in t_ar) target_chs[c] = t_ar[c]
+                 result = result c
+             }
+
+             return result
+         }
+
+         function translate(from, to) { return $0 = stranslate(from, to, $0) }
+
+         # main program
+         BEGIN {
+             if (ARGC < 3) {
+                 print "usage: translate from to" > "/dev/stderr"
+                 exit
+             }
+             FROM = ARGV[1]
+             TO = ARGV[2]
+             ARGC = 2
+             ARGV[1] = "-"
+         }
+
+         {
+             translate(FROM, TO)
+             print
+         }
+       #+END_SRC
