@@ -81,4 +81,40 @@
       }
   #+end_example
 
+** Output
+
+*** #1
+    Rewrite the program:
+    #+BEGIN_SRC awk :in-file data/inventory-shipped :results pp :exports both
+    BEGIN { print "Month Crates"; print "----- ------" }
+    { print $1, "     ", $2 }
     #+END_SRC
+
+    #+RESULTS:
+    : Month Crates
+    : ----- ------
+    : Jan       13
+    : Feb       15
+    : Mar       15
+    : Aug       11
+    : Sep       25
+    : Dec       6
+
+    from Output Separators, by using a new value of OFS.
+
+***** Answer
+      #+BEGIN_SRC awk :in-file data/inventory-shipped :results pp :exports both
+      BEGIN { print "Month Crates"; print "----- ------"; OFS="     " }
+      { print $1, $2 }
+      #+END_SRC
+
+      #+RESULTS:
+      : Month Crates
+      : ----- ------
+      : Jan     13
+      : Feb     15
+      : Mar     15
+      : Aug     11
+      : Sep     25
+      : Dec     6
+
