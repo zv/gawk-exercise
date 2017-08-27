@@ -333,3 +333,13 @@
  }
 
        #+END_SRC
+**** #6
+     Why can’t the =wc.awk= program (see [[https://www.gnu.org/software/gawk/manual/gawk.html#Wc-Program][Wc Program]]) just use the value of =FNR= in
+     =endfile()=? Hint: Examine the code in [[https://www.gnu.org/software/gawk/manual/gawk.html#Filetrans-Function][Filetrans Function]].
+***** Answer
+      This is a confusing question because =ENDFILE= *can* use =FNR=, but this
+      question concerns an arbitrary user-defined function coincidentally named
+      =endfile()= which cannot.=endfile()= is run within the body of
+      =END=, which as the manual indicates, only occurs as the termination of
+      the entire program.
+
