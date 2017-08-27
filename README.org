@@ -73,10 +73,10 @@
 
       int __libc_tcdrain (int fd) {
         if (fd < 0) {
-            __set_errno (EBADF); 
+            __set_errno (EBADF);
             return -1;
           }
-         __set_errno (ENOSYS); 
+         __set_errno (ENOSYS);
         return -1;
       }
   #+end_example
@@ -117,10 +117,42 @@
       : Aug     11
       : Sep     25
       : Dec     6
+** Library
+*** #1
+    In Empty Files, we presented the ~zerofile.awk~ program, which made use of gawk’s
+    =ARGIND= variable. Can this problem be solved without relying on =ARGIND=? If so,
+    how?
+***** ~zerofile.awk~
+      #+BEGIN_SRC awk :in-file data/empty data/empty1 :results pp :exports both
+      BEGIN { Argind = 0 }
 
-*** #2
-    Use the ~printf~ statement to line up the headings and table data for the
-    inventory-shipped example that was covered in [[https://www.gnu.org/software/gawk/manual/gawk.html#Print][Print]].
+      ARGIND > Argind + 1 {
+          for (Argind++; Argind < ARGIND; Argind++)
+              print(ARGV[Argind], Argind)
+      }
 
-    
+      ARGIND != Argind { Argind = ARGIND }
+
+      END {
+          if (ARGIND > Argind)
+              for (Argind++; Argind <= ARGIND; Argind++)
+                  print(ARGV[Argind])
+      }
+      #+END_SRC
+
+      #+RESULTS:
+      : data/empty 1
+      : data/empty1 2
+
 ***** Answer
+      Use ~ENDFILE~ to run a function at the end of each file. You could match
+      ~argc~/~argv~ as well if you wanted to determine the index of the filename
+      argument.
+
+      #+BEGIN_SRC awk :in-file data/empty data/empty1 :results pp :exports both
+      ENDFILE { print(FILENAME) }
+      #+END_SRC
+
+      #+RESULTS:
+      : data/empty
+      : data/empty1
