@@ -342,6 +342,93 @@
 ****** Answer
       Simply check the results of =tolower()= without assigning output.
 
+**** #3
+     The POSIX version of =id= takes options that control which information is
+     printed. Modify the =awk= version (see [[https://www.gnu.org/software/gawk/manual/gawk.html#Id-Program][Id Program]]) to accept the same
+     arguments and perform in the same way.
+
+****** Answer
+       #+BEGIN_SRC awk :results pp :exports both
+         # id.awk --- implement id in awk
+         #
+         # Requires user and group library functions
+         # output is:
+         # uid=12(foo) euid=34(bar) gid=3(baz) \
+         #             egid=5(blat) groups=9(nine),2(two),1(one)
+         @include "vendor/group.awk"
+         @include "vendor/passwd.awk"
+         @include "vendor/getopt.awk"
+
+         BEGIN {
+             if (ARGC < 2) {
+                 print_uid++
+                 print_egid++
+                 print_groups++
+             } else {
+                 while ((c = getopt(ARGC, ARGV, "gGnru")) != -1) {
+                     if (c == "g") { print_gid++ }
+                     else if (c == "G") { print_groups++ }
+                     else if (c == "u") { print_uid++ }
+                 }
+             }
+
+             uid = PROCINFO["uid"]
+             euid = PROCINFO["euid"]
+             gid = PROCINFO["gid"]
+             egid = PROCINFO["egid"]
+
+             if (print_uid)
+                 printf("uid=%d", uid)
+             pw = getpwuid(uid)
+             pr_first_field(pw)
+
+             if (print_uid && euid != uid) {
+                 printf(" euid=%d", euid)
+                 pw = getpwuid(euid)
+                 pr_first_field(pw)
+             }
+
+             if (print_gid)
+                 printf(" gid=%d", gid)
+             pw = getgrgid(gid)
+             pr_first_field(pw)
+
+             if (print_gid && egid != gid) {
+                 printf(" egid=%d", egid)
+                 pw = getgrgid(egid)
+                 pr_first_field(pw)
+             }
+
+             if (print_groups) {
+                 for (i = 1; ("group" i) in PROCINFO; i++) {
+                     if (i == 1)
+                         printf(" groups=")
+                     group = PROCINFO["group" i]
+                     printf("%d", group)
+                     pw = getgrgid(group)
+                     pr_first_field(pw)
+                     if (("group" (i+1)) in PROCINFO)
+                         printf(",")
+                 }
+             }
+
+             print ""
+         }
+
+         function pr_first_field(str,  a)
+         {
+             if (str != "") {
+                 split(str, a, ":")
+                 printf("(%s)", a[1])
+             }
+         }
+       #+END_SRC
+
+       #+RESULTS:
+       : uid=1000(zv)(zv) groups=10(wheel),968(docker),977(wireshark),1000(zv)
+
+
+
 **** #6
      Why can’t the =wc.awk= program (see [[https://www.gnu.org/software/gawk/manual/gawk.html#Wc-Program][Wc Program]]) just use the value of =FNR= in
      =endfile()=? Hint: Examine the code in [[https://www.gnu.org/software/gawk/manual/gawk.html#Filetrans-Function][Filetrans Function]].
