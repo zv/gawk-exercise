@@ -18,7 +18,8 @@
 *** Input
 **** #1
      #+BEGIN_QUOTE
-     Using the FIELDWIDTHS variable (see Constant Size), write a program to read
+     Using the =FIELDWIDTHS= variable (see [[
+https://www.gnu.org/software/gawk/manual/gawk.html#Constant-Size][Constant Size]]), write a program to read
      election data, where each record represents one voter’s votes. Come up with a
      way to define which columns are associated with each ballot item, and print the
      total votes, including abstentions, for each item.
@@ -44,12 +45,12 @@
        : Bush: 9 Gore: 10 Abstained: 1
 
 **** #2
-#+BEGIN_EXAMPLE
+     #+BEGIN_QUOTE
      Plain Getline, presented a program to remove C-style comments (‘/* … */’) from
      the input. That program does not work if one comment ends on one line and
      another one starts later on the same line. That can be fixed by making one
      simple change. What is it?
-#+END_EXAMPLE
+     #+END_QUOTE
 
 ****** Answer
        #+BEGIN_SRC awk :in-file data/tcdrain.c :results pp :exports both
@@ -104,6 +105,7 @@
 *** Output
 
 **** #1
+     #+BEGIN_QUOTE
      Rewrite the program:
      #+BEGIN_SRC awk :in-file data/inventory-shipped :results pp :exports both
      BEGIN { print "Month Crates"; print "----- ------" }
@@ -121,6 +123,7 @@
      : Dec       6
 
      from Output Separators, by using a new value of OFS.
+     #+END_QUOTE
 
 ****** Answer
        #+BEGIN_SRC awk :in-file data/inventory-shipped :results pp :exports both
