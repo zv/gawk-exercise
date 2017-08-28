@@ -17,10 +17,12 @@
 ** Exercises
 *** Input
 **** #1
+     #+BEGIN_QUOTE
      Using the FIELDWIDTHS variable (see Constant Size), write a program to read
      election data, where each record represents one voter’s votes. Come up with a
      way to define which columns are associated with each ballot item, and print the
      total votes, including abstentions, for each item.
+     #+END_QUOTE
 ****** Answer
        #+BEGIN_SRC awk :in-file data/election_data :results pp :exports both
          BEGIN  { FIELDWIDTHS = "18 9 15" }
@@ -42,10 +44,12 @@
        : Bush: 9 Gore: 10 Abstained: 1
 
 **** #2
+#+BEGIN_EXAMPLE
      Plain Getline, presented a program to remove C-style comments (‘/* … */’) from
      the input. That program does not work if one comment ends on one line and
      another one starts later on the same line. That can be fixed by making one
      simple change. What is it?
+#+END_EXAMPLE
 
 ****** Answer
        #+BEGIN_SRC awk :in-file data/tcdrain.c :results pp :exports both
@@ -135,9 +139,11 @@
        : Dec     6
 *** Library
 **** #1
+#+BEGIN_VERSE
      In Empty Files, we presented the ~zerofile.awk~ program, which made use of gawk’s
      =ARGIND= variable. Can this problem be solved without relying on =ARGIND=? If so,
      how?
+#+END_VERSE
 ****** ~zerofile.awk~
        #+BEGIN_SRC awk :in-file data/empty data/empty1 :results pp :exports both
        BEGIN { Argind = 0 }
@@ -446,7 +452,6 @@
      might you use this feature to simplify the program?
 
 ****** Answer
-       
        #+BEGIN_SRC awk :results pp :exports both
          function stranslate(from, to, target, lf, lt, ltarget, t_ar, i, c, result)
          {
