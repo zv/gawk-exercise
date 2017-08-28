@@ -333,6 +333,15 @@
  }
 
        #+END_SRC
+**** #2
+     In [[https://www.gnu.org/software/gawk/manual/gawk.html#Egrep-Program][Egrep Program]], we mentioned that ~‘egrep -i’~ could be simulated in
+     versions of =awk= without =IGNORECASE= by using =tolower()= on the line and the
+     pattern. In a footnote there, we also mentioned that this solution has a
+     bug: the translated line is output, and not the original one. Fix this
+     problem.
+****** Answer
+      Simply check the results of =tolower()= without assigning output.
+
 **** #6
      Why can’t the =wc.awk= program (see [[https://www.gnu.org/software/gawk/manual/gawk.html#Wc-Program][Wc Program]]) just use the value of =FNR= in
      =endfile()=? Hint: Examine the code in [[https://www.gnu.org/software/gawk/manual/gawk.html#Filetrans-Function][Filetrans Function]].
