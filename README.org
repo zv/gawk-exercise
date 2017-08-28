@@ -18,8 +18,7 @@
 *** Input
 **** #1
      #+BEGIN_QUOTE
-     Using the =FIELDWIDTHS= variable (see [[
-https://www.gnu.org/software/gawk/manual/gawk.html#Constant-Size][Constant Size]]), write a program to read
+     Using the =FIELDWIDTHS= variable (see [[https://www.gnu.org/software/gawk/manual/gawk.html#Constant-Size][Constant Size]]), write a program to read
      election data, where each record represents one voter’s votes. Come up with a
      way to define which columns are associated with each ballot item, and print the
      total votes, including abstentions, for each item.
