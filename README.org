@@ -141,11 +141,11 @@
        : Dec     6
 *** Library
 **** #1
-#+BEGIN_VERSE
+     #+BEGIN_QUOTE
      In Empty Files, we presented the ~zerofile.awk~ program, which made use of gawk’s
      =ARGIND= variable. Can this problem be solved without relying on =ARGIND=? If so,
      how?
-#+END_VERSE
+     #+END_QUOTE
 ****** ~zerofile.awk~
        #+BEGIN_SRC awk :in-file data/empty data/empty1 :results pp :exports both
        BEGIN { Argind = 0 }
@@ -181,23 +181,27 @@
        : data/empty 1
        : data/empty1 2
 **** #2
+     #+BEGIN_QUOTE
      As a related challenge, revise that code to handle the case where an
      intervening value in ~ARGV~ is a variable assignment.
+     #+END_QUOTE
 
-       #+BEGIN_SRC awk :cmd-line "--assign=nval=9" :in-file data/empty data/empty1 :results pp :exports both
+     #+BEGIN_SRC awk :cmd-line "--assign=nval=9" :in-file data/empty data/empty1 :results pp :exports both
        ENDFILE {
          if (argv[argi++] !~ /^[a-zA-Z_][a-zA-Z0-9_]*=.*/) {
              print(FILENAME, argi)
          }
        }
-       #+END_SRC
+     #+END_SRC
 
-       #+RESULTS:
-       : data/empty 1
-       : data/empty1 2
+     #+RESULTS:
+     : data/empty 1
+     : data/empty1 2
 *** Programs
 **** #1
+     #+BEGIN_QUOTE
      Rewrite cut.awk (see [[https://www.gnu.org/software/gawk/manual/gawk.html#Cut-Program][Cut Program]]) using ~split()~ with "" as the separator.
+     #+END_QUOTE
 ****** Answer
        #+BEGIN_SRC awk :in-file data/inventory-shipped :results pp :exports both
  # cut.awk --- implement cut in awk
@@ -342,18 +346,22 @@
 
        #+END_SRC
 **** #2
+     #+BEGIN_QUOTE
      In [[https://www.gnu.org/software/gawk/manual/gawk.html#Egrep-Program][Egrep Program]], we mentioned that ~‘egrep -i’~ could be simulated in
      versions of =awk= without =IGNORECASE= by using =tolower()= on the line and the
      pattern. In a footnote there, we also mentioned that this solution has a
      bug: the translated line is output, and not the original one. Fix this
      problem.
+     #+END_QUOTE
 ****** Answer
-      Simply check the results of =tolower()= without assigning output.
+       Simply check the results of =tolower()= without assigning output.
 
 **** #3
+     #+BEGIN_QUOTE
      The POSIX version of =id= takes options that control which information is
      printed. Modify the =awk= version (see [[https://www.gnu.org/software/gawk/manual/gawk.html#Id-Program][Id Program]]) to accept the same
      arguments and perform in the same way.
+     #+END_QUOTE
 
 ****** Answer
        #+BEGIN_SRC awk :results pp :exports both
@@ -438,8 +446,10 @@
 
 
 **** #6
+     #+BEGIN_QUOTE
      Why can’t the =wc.awk= program (see [[https://www.gnu.org/software/gawk/manual/gawk.html#Wc-Program][Wc Program]]) just use the value of =FNR= in
      =endfile()=? Hint: Examine the code in [[https://www.gnu.org/software/gawk/manual/gawk.html#Filetrans-Function][Filetrans Function]].
+     #+END_QUOTE
 ***** Answer
       This is a confusing question because =ENDFILE= *can* use =FNR=, but this
       question concerns an arbitrary user-defined function coincidentally named
@@ -448,10 +458,12 @@
       the entire program.
 
 **** #7
-     Manipulation of individual characters in the =translate= program (see
-     [[https://www.gnu.org/software/gawk/manual/gawk.html#Translate-Program][Translate Program]]) is painful using standard awk functions. Given that =gawk=
-     can split strings into individual characters using "" as the separator, how
-     might you use this feature to simplify the program?
+     #+BEGIN_QUOTE
+     Manipulation of individual characters in the =translate= program (see [[https://www.gnu.org/software/gawk/manual/gawk.html#Translate-Program][Translate Program]]) 
+     is painful using standard awk functions. Given that =gawk= can split strings
+     into individual characters using "" as the separator, how might you use this
+     feature to simplify the program?
+     #+END_QUOTE
 
 ****** Answer
        #+BEGIN_SRC awk :results pp :exports both
